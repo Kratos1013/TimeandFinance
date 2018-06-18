@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="sms_added">#555ebd71</color>
+    <color name="sms_notadded">#ffffff</color>
+    <color name="listviewsms">#eeeeee</color>
+    <color name="income">#059b00</color>
+    <color name="spent">#c31a1a</color>
+    <color name="zero">#808080</color>
+    <color name="budget_plus">#3204ff00</color>
+    <color name="budget_minus">#32ff0000</color>
+    <color name="listview_zone">#32bfbfbf</color>
+    <color name="financemenuitemcolorslight">#4bff6f00</color>
+    <color name="financemenuitemcolorsdark">#ff6f00</color>
+
+
+</resources>

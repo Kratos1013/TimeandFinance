@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Time and Finance</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="timing">Timing</string>
+    <string name="finance">Finance</string>
+    <string name="courses">Courses</string>
+    <string name="settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">name</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove">Remove</string>
+    <string name="emptysms">Расходов не найдено</string>
+    <string name="category1">Foods</string>
+
+
+    //array list
+    <string name="add_new_category">Add new Category</string>
+    <string name="forallperiod">All</string>
+    <string name="emptyadd">Field can\'t be empty</string>
+    <string name="cus_fin">Customize Categories</string>
+    //array list
+    <string name="food">Food</string>
+    <string name="transport">Transport</string>
+    <string name="electronics">Electronics</string>
+    <string name="change">change</string>
+    <string name="save">save</string>
+    <string name="changing">Change category</string>
+    <string name="deleted">Deleted</string>
+    <string name="notdeleted">Woops, something went wrong!</string>
+    <string name="cat_axist">Category already exist</string>
+    <string name="updated">Updated</string>
+    <string name="notupdated">Not updated, something went wrong</string>
+    <string name="remove_permission">Are you shure to delete?</string>
+    <string name="cautiontoremove">You will loose all datas inserted to this category</string>
+    <string name="delete">Delete</string>
+    <string name="category">categories</string>
+    <string name="statistics">statistics</string>
+    <string name="card">card</string>
+    <string name="noupdateall">Could not update from all data</string>
+    <string name="income">Доходы</string>
+    <string name="spent">Расходы</string>
+    <string name="noincome">No income</string>
+    <string name="total">Бюджет</string>
+    <string name="nodata">Ничего не найдено</string>
+    <string name="description">Description</string>
+    <string name="amount">amount</string>
+    <string name="aktivi">АКТИВЫ</string>
+    <string name="passivi">ПАССИВЫ</string>
+    <string name="sberejeniye">СБЕРЕЖЕНИЕ</string>
+    <string name="denejniypotok">ДЕНЕЖНЫЙ ПОТОК</string>
+
+</resources>
