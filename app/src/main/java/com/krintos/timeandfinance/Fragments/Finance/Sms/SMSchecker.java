@@ -55,8 +55,8 @@ public class SMSchecker extends Fragment {
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getChildFragmentManager());
         adapter.addFragment(new spent(), "Расходы");
-
         adapter.addFragment(new income(), "Доходы");
+        adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
     }
 

@@ -1,4 +1,4 @@
-package com.krintos.timeandfinance.Fragments.Finance;
+package com.krintos.timeandfinance.Fragments.Finance.Category;
 
 
 import android.annotation.SuppressLint;
@@ -49,10 +49,6 @@ public class Finance extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_finance, container, false);
-        filter = rootView.findViewById(R.id.filter);
-        left = rootView.findViewById(R.id.left);
-        right = rootView.findViewById(R.id.right);
-        showdate = rootView.findViewById(R.id.date);
         incomeandspend = rootView.findViewById(R.id.incomeandspent);
         statistics = rootView.findViewById(R.id.statistics);
         card = rootView.findViewById(R.id.card);
@@ -61,23 +57,7 @@ public class Finance extends Fragment {
         tvtotal = rootView.findViewById(R.id.total);
         db = new FinanceSQLiteHandler(getContext());
         calendar = Calendar.getInstance();
-
-        setfilter();
         setdatasforincomeandspent(datafilter, pickedDate);
-        left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                leftclicked();
-            }
-        });
-        right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rightclicked();
-            }
-        });
-
-
         incomeandspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +74,7 @@ public class Finance extends Fragment {
 
             }
         });
-        statistics.setOnClickListener(new View.OnClickListener() {
+        /*statistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new Handler().postDelayed(new Runnable() {
@@ -123,11 +103,116 @@ public class Finance extends Fragment {
                     }
                 }, 100);
             }
-        });
+        });*/
         return rootView;
     }
 
-    private void rightclicked() {
+
+
+
+
+    @SuppressLint("SetTextI18n")
+    private void setdatasforincomeandspent(int datafilter, String date) {
+        fincome = (float) 0.0;
+        fspent = (float) 0.0;
+        ftotal = (float) 0.0;
+        Cursor income = db.getAlldatas(FinanceSQLiteHandler.Table_Name_income);
+        if (income.getCount() == 0){
+        }else {
+            while (income.moveToNext()){
+                String time = income.getString(3);
+                if (datafilter==0){
+                    if (time.equals(date)){
+                        String amount = income.getString(4);
+                        amount = amount.replaceAll("[^\\.0123456789]", "");
+                        float f = Float.parseFloat(amount);
+                        fincome = fincome +f;
+                    }
+                }else if (datafilter ==1){
+                    String mtime = income.getString(3);
+                    mtime = mtime.substring(3, mtime.length());
+
+                    if (mtime.equals(date)){
+                        String amount = income.getString(4);
+                        amount = amount.replaceAll("[^\\.0123456789]", "");
+                        float f = Float.parseFloat(amount);
+                        fincome = fincome +f;
+                    }
+                }else if (datafilter == 2){
+                    String ytime = income.getString(3);
+                    ytime = ytime.substring(ytime.length()-2,ytime.length());
+                if (ytime.equals(date)){
+                    String amount = income.getString(4);
+                    amount = amount.replaceAll("[^\\.0123456789]", "");
+                    float f = Float.parseFloat(amount);
+                    fincome = fincome +f;
+                }
+
+                }else if (datafilter == 3){
+                    String amount = income.getString(4);
+                    amount = amount.replaceAll("[^\\.0123456789]", "");
+                    float f = Float.parseFloat(amount);
+                    fincome = fincome +f;
+                }
+            }
+        }
+        Cursor spent = db.getAlldatas(FinanceSQLiteHandler.Table_Name_spent);
+        if (spent.getCount() == 0){
+        }else {
+            while (spent.moveToNext()){
+                String time = spent.getString(3);
+                if (datafilter==0){
+                    if (time.equals(date)){
+                        String amount = spent.getString(4);
+                        amount = amount.replaceAll("[^\\.0123456789]", "");
+                        float f = Float.parseFloat(amount);
+                        fspent = fspent +f;
+                    }
+                }else if (datafilter ==1){
+                    String mtime = spent.getString(3);
+                    mtime = mtime.substring(3, mtime.length());
+                    if (mtime.equals(date)){
+                        String amount = spent.getString(4);
+                        amount = amount.replaceAll("[^\\.0123456789]", "");
+                        float f = Float.parseFloat(amount);
+                        fspent = fspent +f;
+                    }
+                }else if (datafilter == 2){
+                    String ytime = spent.getString(3);
+                    ytime = ytime.substring(6, ytime.length());
+                    if (ytime.equals(date)){
+                        String amount = spent.getString(4);
+                        amount = amount.replaceAll("[^\\.0123456789]", "");
+                        float f = Float.parseFloat(amount);
+                        fspent = fspent +f;
+                    }
+
+                }else if (datafilter == 3){
+                    String amount = spent.getString(4);
+                    amount = amount.replaceAll("[^\\.0123456789]", "");
+                    float f = Float.parseFloat(amount);
+                    fspent = fspent +f;
+                }
+            }
+        }
+
+        ftotal = fincome - fspent;
+        tvincome.setText("Доходы : +"+fincome+"p");
+        tvspent.setText("Расходы : -"+fspent+"p");
+        if (ftotal>0){
+            tvtotal.setText("Бюджет : +"+ftotal+"p");
+        }else {
+            tvtotal.setText("Бюджет : "+ftotal+"p");
+        }
+    }
+
+
+}
+/* Fragment Category = new Finance_Category_main();
+        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.finance_main_frame, Category);
+        ft.commit();*/
+/* private void rightclicked() {
         String gdate = showdate.getText().toString().trim();
         if (datafilter == 0){
             int d2 = calendar.get(Calendar.DAY_OF_MONTH);
@@ -225,137 +310,21 @@ public class Finance extends Fragment {
             }
 
         }
-    }
-
-    private String getcalendar(int position) {
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        if (day<=9){
-            mday = "0"+day;
-        }else {
-            mday=""+day;
+    }*/
+/*
+left.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+        leftclicked();
         }
-        month = calendar.get(Calendar.MONTH);
-        month=month+1;
-        year = calendar.get(Calendar.YEAR);
-        year = year-2000;
-
-        if (position==0){
-            if (month<=9){
-                pickedDate = mday+"."+"0"+month+"."+year;
-            }else {
-                pickedDate = mday+"."+month+"."+year;
-            }
-        }else if (position ==1){
-            if (month<=9){
-                pickedDate = "0"+month+"."+year;
-            }else {
-                pickedDate = month+"."+year;
-            }
-        }else if (position ==2){
-            year = year +2000;
-            pickedDate = ""+year;
-        }else {
-            pickedDate = getResources().getString(R.string.forallperiod);
+        });
+        right.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+        rightclicked();
         }
-        return pickedDate;
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void setdatasforincomeandspent(int datafilter, String date) {
-        fincome = (float) 0.0;
-        fspent = (float) 0.0;
-        ftotal = (float) 0.0;
-        Cursor income = db.getAlldatas(FinanceSQLiteHandler.Table_Name_income);
-        if (income.getCount() == 0){
-        }else {
-            while (income.moveToNext()){
-                String time = income.getString(3);
-                if (datafilter==0){
-                    if (time.equals(date)){
-                        String amount = income.getString(4);
-                        amount = amount.replaceAll("[^\\.0123456789]", "");
-                        float f = Float.parseFloat(amount);
-                        fincome = fincome +f;
-                    }
-                }else if (datafilter ==1){
-                    String mtime = income.getString(3);
-                    mtime = mtime.substring(3, mtime.length());
-
-                    if (mtime.equals(date)){
-                        String amount = income.getString(4);
-                        amount = amount.replaceAll("[^\\.0123456789]", "");
-                        float f = Float.parseFloat(amount);
-                        fincome = fincome +f;
-                    }
-                }else if (datafilter == 2){
-                    String ytime = income.getString(3);
-                    ytime = ytime.substring(ytime.length()-2,ytime.length());
-                if (ytime.equals(date)){
-                    String amount = income.getString(4);
-                    amount = amount.replaceAll("[^\\.0123456789]", "");
-                    float f = Float.parseFloat(amount);
-                    fincome = fincome +f;
-                }
-
-                }else if (datafilter == 3){
-                    String amount = income.getString(4);
-                    amount = amount.replaceAll("[^\\.0123456789]", "");
-                    float f = Float.parseFloat(amount);
-                    fincome = fincome +f;
-                }
-            }
-        }
-        Cursor spent = db.getAlldatas(FinanceSQLiteHandler.Table_Name_spent);
-        if (spent.getCount() == 0){
-        }else {
-            while (spent.moveToNext()){
-                String time = spent.getString(3);
-                if (datafilter==0){
-                    if (time.equals(date)){
-                        String amount = spent.getString(4);
-                        amount = amount.replaceAll("[^\\.0123456789]", "");
-                        float f = Float.parseFloat(amount);
-                        fspent = fspent +f;
-                    }
-                }else if (datafilter ==1){
-                    String mtime = spent.getString(3);
-                    mtime = mtime.substring(3, mtime.length());
-                    if (mtime.equals(date)){
-                        String amount = spent.getString(4);
-                        amount = amount.replaceAll("[^\\.0123456789]", "");
-                        float f = Float.parseFloat(amount);
-                        fspent = fspent +f;
-                    }
-                }else if (datafilter == 2){
-                    String ytime = spent.getString(3);
-                    ytime = ytime.substring(6, ytime.length());
-                    if (ytime.equals(date)){
-                        String amount = spent.getString(4);
-                        amount = amount.replaceAll("[^\\.0123456789]", "");
-                        float f = Float.parseFloat(amount);
-                        fspent = fspent +f;
-                    }
-
-                }else if (datafilter == 3){
-                    String amount = spent.getString(4);
-                    amount = amount.replaceAll("[^\\.0123456789]", "");
-                    float f = Float.parseFloat(amount);
-                    fspent = fspent +f;
-                }
-            }
-        }
-
-        ftotal = fincome - fspent;
-        tvincome.setText("Доходы : +"+fincome+"p");
-        tvspent.setText("Расходы : -"+fspent+"p");
-        if (ftotal>0){
-            tvtotal.setText("Бюджет : +"+ftotal+"p");
-        }else {
-            tvtotal.setText("Бюджет : "+ftotal+"p");
-        }
-    }
-
-    private void setfilter() {
+        });*/
+/*private void setfilter() {
        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_spinner_item,getResources().getStringArray(R.array.filter));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -394,9 +363,36 @@ public class Finance extends Fragment {
                 showdate.setText(getcalendar(1));
             }
         });
-    }
-}
-/* Fragment Category = new Finance_Category_main();
-        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.finance_main_frame, Category);
-        ft.commit();*/
+    }*/
+/* private String getcalendar(int position) {
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        if (day<=9){
+            mday = "0"+day;
+        }else {
+            mday=""+day;
+        }
+        month = calendar.get(Calendar.MONTH);
+        month=month+1;
+        year = calendar.get(Calendar.YEAR);
+        year = year-2000;
+
+        if (position==0){
+            if (month<=9){
+                pickedDate = mday+"."+"0"+month+"."+year;
+            }else {
+                pickedDate = mday+"."+month+"."+year;
+            }
+        }else if (position ==1){
+            if (month<=9){
+                pickedDate = "0"+month+"."+year;
+            }else {
+                pickedDate = month+"."+year;
+            }
+        }else if (position ==2){
+            year = year +2000;
+            pickedDate = ""+year;
+        }else {
+            pickedDate = getResources().getString(R.string.forallperiod);
+        }
+        return pickedDate;
+    }*/

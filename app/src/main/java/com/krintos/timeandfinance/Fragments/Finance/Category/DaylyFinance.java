@@ -4,12 +4,10 @@ package com.krintos.timeandfinance.Fragments.Finance.Category;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -32,7 +30,6 @@ import android.widget.Toast;
 
 import com.krintos.timeandfinance.Database.FinanceSQLiteHandler;
 import com.krintos.timeandfinance.Fragments.Finance.Category.Add.Custom_add_finance;
-import com.krintos.timeandfinance.Fragments.Finance.Finance;
 import com.krintos.timeandfinance.R;
 
 import java.util.ArrayList;

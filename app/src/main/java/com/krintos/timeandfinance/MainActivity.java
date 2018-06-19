@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.krintos.timeandfinance.Database.FinanceSQLiteHandler;
-import com.krintos.timeandfinance.Fragments.Finance.Finance;
+import com.krintos.timeandfinance.Fragments.Finance.Finance_Main_Page;
 import com.krintos.timeandfinance.Fragments.Settings.Settings;
 import com.krintos.timeandfinance.Fragments.Timing;
 
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                      Fragment fragment = new Finance();
+                      Fragment fragment = new Finance_Main_Page();
                         android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                        ft.replace(R.id.content_main, fragment);
                        ft.addToBackStack("finance");

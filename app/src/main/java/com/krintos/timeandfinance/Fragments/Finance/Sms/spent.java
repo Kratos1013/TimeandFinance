@@ -60,6 +60,9 @@ public class spent extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_spent, container, false);
+        sms_time.clear();
+        sms_amount.clear();
+        sms_place.clear();
         sms = (ListView) rootView.findViewById(R.id.listviewforsms);
         db = new FinanceSQLiteHandler(getActivity().getApplicationContext());
         all = (ImageView) rootView.findViewById(R.id.showAll);

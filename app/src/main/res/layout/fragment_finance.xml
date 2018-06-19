@@ -5,216 +5,146 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.krintos.timeandfinance.Fragments.Finance.Finance">
-   <Spinner
-       android:visibility="gone"
-       android:id="@+id/filter"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
-   </Spinner>
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageButton
-            android:id="@+id/left"
-            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageButton
-            android:id="@+id/right"
-            android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
+    tools:context="com.krintos.timeandfinance.Fragments.Finance.Category.Finance">
 
-        android:layout_weight="1.0"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:id="@+id/incomeandspent"
+            android:layout_weight="1.0"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@drawable/financemenuitems"
-            android:layout_margin="5dp"
-            android:layout_weight="1.0"
-            >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Расходы и доходы"
-                android:textAlignment="center"
-                android:textColorLink="@color/financemenuitemcolorsdark" />
-            <TextView
-                android:id="@+id/income"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/spent"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/total"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/aktivi"
-            android:background="@drawable/financemenuitems"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-            <TextView
-                android:textAlignment="center"
-                android:text="@string/aktivi"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_weight="1.0"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/denejniypotok"
-            android:layout_margin="5dp"
-            android:background="@drawable/financemenuitems"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:orientation="horizontal">
-            <TextView
-                android:textAlignment="center"
-                android:text="@string/denejniypotok"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-
-
-
-
-        <LinearLayout
-            android:id="@+id/passivi"
-            android:layout_margin="5dp"
-            android:background="@drawable/financemenuitems"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:orientation="horizontal">
-            <TextView
-                android:text="@string/passivi"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_weight="1.0"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/statistics"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_margin="5dp"
-            android:background="@drawable/financemenuitems"
-            android:layout_weight="1.0">
-            <ImageView
-                android:src="@drawable/statistics"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/incomeandspent"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"/>
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/financemenuitems"
+                android:layout_margin="5dp"
+                android:layout_weight="1.0"
+                >
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Расходы и доходы"
+                    android:textAlignment="center"
+                    android:textColorLink="@color/financemenuitemcolorsdark" />
+                <TextView
+                    android:id="@+id/income"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/spent"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/total"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/denejniypotok"
+                android:layout_margin="5dp"
+                android:background="@drawable/financemenuitems"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2.0"
-                android:text="@string/statistics"
-                android:textAlignment="center" />
+                android:orientation="horizontal">
+                <TextView
+                    android:textAlignment="center"
+                    android:text="@string/denejniypotok"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
+            </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
-            android:id="@+id/sberejeniye"
-            android:layout_margin="5dp"
-            android:background="@drawable/financemenuitems"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_weight="1.0"
-            android:orientation="horizontal">
-            <TextView
-                android:textAlignment="center"
-                android:text="@string/sberejeniye"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_weight="1.0"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/card"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_margin="5dp"
-            android:background="@drawable/financemenuitems"
-            android:layout_weight="1.0">
-            <ImageView
-                android:src="@drawable/ic_credit_card_black_24dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/aktivi"
+                android:background="@drawable/financemenuitems"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"/>
-            <TextView
-                android:text="@string/card"
-                android:textAlignment="center"
+                android:layout_weight="1.0"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:textAlignment="center"
+                    android:text="@string/aktivi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/passivi"
+                android:layout_margin="5dp"
+                android:background="@drawable/financemenuitems"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2.0"/>
+                android:layout_weight="1.0"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/passivi"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="1.0">
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/sberejeniye"
+                android:layout_margin="5dp"
+                android:background="@drawable/financemenuitems"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:orientation="horizontal">
+                <TextView
+                    android:textAlignment="center"
+                    android:text="@string/sberejeniye"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-
-
 </LinearLayout>
 
+    <!--<Spinner
+           android:visibility="gone"
+           android:id="@+id/filter"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+       </Spinner>
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/left"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageButton
+                android:id="@+id/right"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>-->

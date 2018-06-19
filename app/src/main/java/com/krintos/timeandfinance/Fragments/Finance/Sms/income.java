@@ -64,6 +64,9 @@ public class income extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_income, container, false);
+        sms_amount.clear();
+        sms_how.clear();
+        sms_time.clear();
         sms = (ListView) rootView.findViewById(R.id.listviewforsms);
         db = new FinanceSQLiteHandler(getActivity().getApplicationContext());
 
