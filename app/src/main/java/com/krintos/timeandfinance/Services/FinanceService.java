@@ -118,5 +118,5 @@ public class FinanceService extends Service{
         startService(restart);
         super.onTaskRemoved(rootIntent);
     }
-    
+
 }

@@ -21,13 +21,15 @@ import java.util.ArrayList;
 public class FinanceMainPageHelper extends ArrayAdapter<String> {
     private String[] categoryname;
     private Float[] amounts;
+    private String type;
     private Activity context;
 
-    public FinanceMainPageHelper(Activity context, ArrayList<String> categories, ArrayList<Float> amount){
+    public FinanceMainPageHelper(Activity context, ArrayList<String> categories, ArrayList<Float> amount,String type){
         super(context, R.layout.finance_main_page_helper, categories);
         this.context = context;
         this.categoryname = categories.toArray(new String[0]);
         this.amounts = amount.toArray(new Float[0]);
+        this.type = type;
 
     }
 
@@ -44,10 +46,18 @@ public class FinanceMainPageHelper extends ArrayAdapter<String> {
         }else {
             viewHolder = (FinanceMainPageHelper.ViewHolder) r.getTag();
         }
-        viewHolder.cat.setText(categoryname[position]);
-        String floattostring = String.valueOf(amounts[position]);
-        String price = "-"+floattostring+"p";
-        viewHolder.amount.setText(price);
+        if (type.equals("income")){
+
+            viewHolder.cat.setText(categoryname[position]);
+            String floattostring = String.valueOf(amounts[position]);
+            String price = "+"+floattostring+"p";
+            viewHolder.amount.setText(price);
+        }else if (type.equals("spent")){
+            viewHolder.cat.setText(categoryname[position]);
+            String floattostring = String.valueOf(amounts[position]);
+            String price = "-"+floattostring+"p";
+            viewHolder.amount.setText(price);
+        }
         return r;
     }
     class ViewHolder{

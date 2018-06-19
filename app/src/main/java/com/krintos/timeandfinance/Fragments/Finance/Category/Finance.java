@@ -34,8 +34,11 @@ import java.util.Calendar;
 public class Finance extends Fragment {
     private Calendar calendar;
     private ArrayList<String> categories =new ArrayList<>();
+    private ArrayList<String> categoriesforincome =new ArrayList<>();
+
     private ArrayList<Float> amounts =new ArrayList<>();
-    private ListView spentlistview;
+    private ArrayList<Float> amountsforincome =new ArrayList<>();
+    private ListView spentlistview, incomelistview;
     private LinearLayout incomeandspend,statistics,card;
     private TextView tvincome,tvspent,tvtotal, showdate;
     private int datafilter, day, month, year, pfilter;
@@ -59,12 +62,45 @@ public class Finance extends Fragment {
         tvincome = rootView.findViewById(R.id.income);
         tvspent = rootView.findViewById(R.id.spent);
         tvtotal = rootView.findViewById(R.id.total);
+        incomelistview = rootView.findViewById(R.id.incomelistview);
         spentlistview = rootView.findViewById(R.id.spentlistview);
         db = new FinanceSQLiteHandler(getContext());
         calendar = Calendar.getInstance();
         setdatasforincomeandspent(1, getcalendar(1));
+        setincomelistview(getcalendar(1));
         setspentlistview(getcalendar(1));
+        incomelistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Fragment Category = new Finance_Category_main();
+                        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_main, Category);
+                        ft.addToBackStack("incomeandspentmenu");
+                        ft.commit();
+                    }
+                }, 100);
 
+            }
+        });
+        spentlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Fragment Category = new Finance_Category_main();
+                        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_main, Category);
+                        ft.addToBackStack("incomeandspentmenu");
+                        ft.commit();
+                    }
+                }, 100);
+
+            }
+        });
         incomeandspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,8 +121,35 @@ public class Finance extends Fragment {
         return rootView;
     }
 
+    private void setincomelistview(String month) {
+        categoriesforincome.clear();
+        String type = "income";
+        String table = FinanceSQLiteHandler.TABLE_CATEGORIES_Income;
+        Cursor spentcursor = db.getCategoryNames(table);
+        while (spentcursor.moveToNext()){
+            String categoryname = spentcursor.getString(1);
+            Cursor getspends = db.getAlldatasbydate(FinanceSQLiteHandler.Table_Name_income,categoryname,month);
+            if (getspends.getCount() >0){
+                categoriesforincome.add(categoryname);
+                float gincome = (float) 0.0;
+                while (getspends.moveToNext()){
+                    String amount = getspends.getString(4);
+                    amount = amount.replaceAll("[^\\.0123456789]", "");
+                    float f = Float.parseFloat(amount);
+                    gincome +=f;
+                }
+                amountsforincome.add(gincome);
+            }
+        }
+        FinanceMainPageHelper financeMainPageHelper = new FinanceMainPageHelper(getActivity(), categoriesforincome,amountsforincome,type);
+        financeMainPageHelper.notifyDataSetChanged();
+        incomelistview.setAdapter(financeMainPageHelper);
+    }
+
     private void setspentlistview(String month) {
         categories.clear();
+        String type = "spent";
+
         String table = FinanceSQLiteHandler.TABLE_CATEGORIES_Spent;
         Cursor spentcursor = db.getCategoryNames(table);
         while (spentcursor.moveToNext()){
@@ -104,7 +167,7 @@ public class Finance extends Fragment {
                 amounts.add(gspent);
             }
         }
-        FinanceMainPageHelper financeMainPageHelper = new FinanceMainPageHelper(getActivity(), categories,amounts);
+        FinanceMainPageHelper financeMainPageHelper = new FinanceMainPageHelper(getActivity(), categories,amounts,type);
         financeMainPageHelper.notifyDataSetChanged();
         spentlistview.setAdapter(financeMainPageHelper);
 
