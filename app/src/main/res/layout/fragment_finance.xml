@@ -21,30 +21,50 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:background="@drawable/financemenuitems"
                 android:layout_margin="5dp"
                 android:layout_weight="1.0"
                 >
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/income"
+                        android:textAlignment="center" />
+                    <TextView
+                        android:id="@+id/income"
+                        android:textAlignment="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Расходы и доходы"
-                    android:textAlignment="center"
-                    android:textColorLink="@color/financemenuitemcolorsdark" />
-                <TextView
-                    android:id="@+id/income"
-                    android:textAlignment="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/spent"
-                    android:textAlignment="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textAlignment="center"
+                        android:text="@string/spent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/spent"
+                        android:textAlignment="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <ListView
+                        android:id="@+id/spentlistview"
+                        android:divider="@null"
+                        android:dividerHeight="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </ListView>
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/total"
                     android:textAlignment="center"

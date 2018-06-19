@@ -42,8 +42,6 @@ public class Finance_Main_Page extends Fragment {
         mFinancePageAdaper = new FinancePageAdapter(getActivity().getSupportFragmentManager());
         setupViewPager(mViewPager);
         tabLayout.setupWithViewPager(mViewPager);
-
-
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setIcon(icons[i]);
         }

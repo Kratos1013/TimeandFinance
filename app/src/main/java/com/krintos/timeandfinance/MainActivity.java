@@ -1,9 +1,13 @@
 package com.krintos.timeandfinance;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +22,7 @@ import com.krintos.timeandfinance.Database.FinanceSQLiteHandler;
 import com.krintos.timeandfinance.Fragments.Finance.Finance_Main_Page;
 import com.krintos.timeandfinance.Fragments.Settings.Settings;
 import com.krintos.timeandfinance.Fragments.Timing;
+import com.krintos.timeandfinance.Services.FinanceService;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        startservice();
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +59,16 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Creating custom shared preferences
+    }
+
+    private void startservice() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.READ_SMS)
+                == PackageManager.PERMISSION_GRANTED ) {
+            //permission is granted
+            Intent service = new Intent(this, FinanceService.class);
+            startService(service);
+        }
     }
 
     /*private void autoincreamentcategories() {

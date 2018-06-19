@@ -52,6 +52,20 @@ public class MonthlyFinance extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_monthly_finance, container, false);
+        months.clear();
+        mincome.clear();
+        mspent.clear();
+        month.clear();
+        totalincome= (long) 0.0; totalspent= (long) 0.0; budget= (long) 0.0;
+        monthincome = new float[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        monthspent = new float[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        monthtotal = new float[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        /*for (int i = 0; i < 12;i++ ){
+            monthtotal[i] = 0;
+            monthspent[i] = 0;
+            monthincome[i] = 0;
+        }*/
+
         showyear = rootView.findViewById(R.id.showyear);
         incometotal = rootView.findViewById(R.id.incometotal);
         spenttotal = rootView.findViewById(R.id.spenttotal);

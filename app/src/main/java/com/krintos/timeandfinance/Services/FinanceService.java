@@ -37,9 +37,7 @@ import java.util.regex.Pattern;
  */
 
 public class FinanceService extends Service{
-    SmsReceiver smsReceiver = new SmsReceiver();
-
-
+    public SmsReceiver smsReceiver = new SmsReceiver();
     @Override
     public void onCreate() {
         super.onCreate();
@@ -48,24 +46,23 @@ public class FinanceService extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         registerReceiver(smsReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
-
         Toast.makeText(this, "Started", Toast.LENGTH_SHORT).show();
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        Toast.makeText(this, "Stoped", Toast.LENGTH_SHORT).show();
+        Intent restart = new Intent(getApplicationContext(), this.getClass());
+        restart.setPackage(getPackageName());
+        startService(restart);
+        super.onDestroy();
     }
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
-
     private class SmsReceiver extends BroadcastReceiver{
-
         @Override
         public void onReceive(Context context, Intent intent) {
             String phonenumber = "", message = "";
@@ -114,5 +111,11 @@ public class FinanceService extends Service{
         startActivity(dialogIntent);
     }
 
-
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Intent restart = new Intent(getApplicationContext(), this.getClass());
+        restart.setPackage(getPackageName());
+        startService(restart);
+        super.onTaskRemoved(rootIntent);
+    }
 }

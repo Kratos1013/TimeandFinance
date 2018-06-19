@@ -34,6 +34,7 @@ public class YearlyFinance extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_yearly_finance, container, false);
+        totalincome= (long) 0.0; totalspent= (long) 0.0; budget= (long) 0.0;
         incometotal = rootView.findViewById(R.id.incometotal);
         spenttotal = rootView.findViewById(R.id.spenttotal);
         total = rootView.findViewById(R.id.total);

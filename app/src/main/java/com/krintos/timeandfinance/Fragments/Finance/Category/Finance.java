@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +22,10 @@ import com.krintos.timeandfinance.Database.FinanceSQLiteHandler;
 import com.krintos.timeandfinance.Fragments.Finance.Category.Finance_Category_main;
 import com.krintos.timeandfinance.Fragments.Finance.Sms.SMSchecker;
 import com.krintos.timeandfinance.Fragments.Finance.Statistics.Finance_Statistics_Main_Frame;
+import com.krintos.timeandfinance.Fragments.Helpers.FinanceMainPageHelper;
 import com.krintos.timeandfinance.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -30,8 +33,9 @@ import java.util.Calendar;
  */
 public class Finance extends Fragment {
     private Calendar calendar;
-    private Spinner filter;
-
+    private ArrayList<String> categories =new ArrayList<>();
+    private ArrayList<Float> amounts =new ArrayList<>();
+    private ListView spentlistview;
     private LinearLayout incomeandspend,statistics,card;
     private TextView tvincome,tvspent,tvtotal, showdate;
     private int datafilter, day, month, year, pfilter;
@@ -55,9 +59,12 @@ public class Finance extends Fragment {
         tvincome = rootView.findViewById(R.id.income);
         tvspent = rootView.findViewById(R.id.spent);
         tvtotal = rootView.findViewById(R.id.total);
+        spentlistview = rootView.findViewById(R.id.spentlistview);
         db = new FinanceSQLiteHandler(getContext());
         calendar = Calendar.getInstance();
-        setdatasforincomeandspent(datafilter, pickedDate);
+        setdatasforincomeandspent(1, getcalendar(1));
+        setspentlistview(getcalendar(1));
+
         incomeandspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,41 +81,38 @@ public class Finance extends Fragment {
 
             }
         });
-        /*statistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Fragment Statistics = new Finance_Statistics_Main_Frame();
-                        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.content_main, Statistics);
-                        ft.addToBackStack("statistics");
-                        ft.commit();
-                    }
-                }, 100);
-            }
-        });
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Fragment Card = new SMSchecker();
-                        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.content_main, Card);
-                        ft.addToBackStack("Card");
-                        ft.commit();
-                    }
-                }, 100);
-            }
-        });*/
+
         return rootView;
     }
 
+    private void setspentlistview(String month) {
+        categories.clear();
+        String table = FinanceSQLiteHandler.TABLE_CATEGORIES_Spent;
+        Cursor spentcursor = db.getCategoryNames(table);
+        while (spentcursor.moveToNext()){
+            String categoryname = spentcursor.getString(1);
+            Cursor getspends = db.getAlldatasbydate(FinanceSQLiteHandler.Table_Name_spent,categoryname,month);
+            if (getspends.getCount() >0){
+                categories.add(categoryname);
+                float gspent = (float) 0.0;
+            while (getspends.moveToNext()){
+                String amount = getspends.getString(4);
+                amount = amount.replaceAll("[^\\.0123456789]", "");
+                float f = Float.parseFloat(amount);
+                gspent +=f;
+            }
+                amounts.add(gspent);
+            }
+        }
+        FinanceMainPageHelper financeMainPageHelper = new FinanceMainPageHelper(getActivity(), categories,amounts);
+        financeMainPageHelper.notifyDataSetChanged();
+        spentlistview.setAdapter(financeMainPageHelper);
 
+    }
 
+    private void listviewfiller(String categoryname, String amount) {
+
+    }
 
 
     @SuppressLint("SetTextI18n")
@@ -205,9 +209,88 @@ public class Finance extends Fragment {
             tvtotal.setText("Бюджет : "+ftotal+"p");
         }
     }
+    private String getcalendar(int position) {
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        if (day <= 9) {
+            mday = "0" + day;
+        } else {
+            mday = "" + day;
+        }
+        month = calendar.get(Calendar.MONTH);
+        month = month + 1;
+        year = calendar.get(Calendar.YEAR);
+        year = year - 2000;
 
+        if (position == 0) {
+            if (month <= 9) {
+                pickedDate = mday + "." + "0" + month + "." + year;
+            } else {
+                pickedDate = mday + "." + month + "." + year;
+            }
+        } else if (position == 1) {
+            if (month <= 9) {
+                pickedDate = "0" + month + "." + year;
+            } else {
+                pickedDate = month + "." + year;
+            }
+        } else if (position == 2) {
+            year = year + 2000;
+            pickedDate = "" + year;
+        } else {
+            pickedDate = getResources().getString(R.string.forallperiod);
+        }
+        return pickedDate;
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Fragment Category = new Finance_Category_main();
         android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.finance_main_frame, Category);
@@ -364,35 +447,5 @@ public void onClick(View v) {
             }
         });
     }*/
-/* private String getcalendar(int position) {
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        if (day<=9){
-            mday = "0"+day;
-        }else {
-            mday=""+day;
-        }
-        month = calendar.get(Calendar.MONTH);
-        month=month+1;
-        year = calendar.get(Calendar.YEAR);
-        year = year-2000;
-
-        if (position==0){
-            if (month<=9){
-                pickedDate = mday+"."+"0"+month+"."+year;
-            }else {
-                pickedDate = mday+"."+month+"."+year;
-            }
-        }else if (position ==1){
-            if (month<=9){
-                pickedDate = "0"+month+"."+year;
-            }else {
-                pickedDate = month+"."+year;
-            }
-        }else if (position ==2){
-            year = year +2000;
-            pickedDate = ""+year;
-        }else {
-            pickedDate = getResources().getString(R.string.forallperiod);
-        }
-        return pickedDate;
+/*
     }*/

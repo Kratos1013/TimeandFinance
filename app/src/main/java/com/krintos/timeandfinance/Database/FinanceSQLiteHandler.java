@@ -126,6 +126,11 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
         Cursor result = db.rawQuery("select * from "+Table_name, null);
         return result;
     }
+    public Cursor getAlldatasbydate(String table,String category, String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("select * from "+table+" where "+KEY_Category+" = \"" + category + "\" and "+KEY_Date+" like "+"\"%"+date+"\";",null);
+        return result;
+    }
     public Cursor getCategoryNames(String Table_name){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor result = db.rawQuery("select * from "+Table_name, null);
@@ -246,5 +251,6 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
         db.update(table,values, KEY_ID+" = ?", new String[]{id});
         return true;
     }
+
 
 }

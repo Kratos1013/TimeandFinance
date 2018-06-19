@@ -27,8 +27,22 @@
 
         <service
             android:name=".Services.FinanceService"
-            android:exported="false"></service>
+            android:exported="true">
+            <intent-filter android:priority="9999">
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE">
 
+                </action>
+            </intent-filter>
+        </service>
+
+        <!--<receiver android:name=".Services.FinanceService">
+            <intent-filter android:priority="9999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED">
+
+                </action>
+            </intent-filter>
+
+        </receiver>-->
         <activity android:name=".Services.FinancePopup"
 
             android:launchMode="singleInstance"
