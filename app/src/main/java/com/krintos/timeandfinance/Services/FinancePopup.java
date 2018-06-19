@@ -2,6 +2,7 @@ package com.krintos.timeandfinance.Services;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -200,7 +201,8 @@ public class FinancePopup extends Activity {
                                 Boolean isInserted = db.inserttocategory(categoryName, trans_name, sdate, samount, table_name,"noicon");
                                 if (isInserted) {
                                     Toast.makeText(FinancePopup.this, "Added", Toast.LENGTH_SHORT).show();
-                                    onBackPressed();
+                                    finish();
+                                    
                                 } else {
                                     //what to do when its not added to the category
                                     Toast.makeText(FinancePopup.this, "COULDNT", Toast.LENGTH_SHORT).show();

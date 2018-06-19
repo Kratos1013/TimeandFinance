@@ -106,6 +106,7 @@ public class FinanceService extends Service{
     private void callpopup(String  phonenumber, String Message) {
         Intent dialogIntent = new Intent(this, FinancePopup.class);
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         dialogIntent.putExtra("PHONE_NUMBER", phonenumber);
         dialogIntent.putExtra("MESSAGE_FROM_BANK", Message);
         startActivity(dialogIntent);
