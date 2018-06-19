@@ -111,7 +111,6 @@ public class FinanceService extends Service{
         dialogIntent.putExtra("MESSAGE_FROM_BANK", Message);
         startActivity(dialogIntent);
     }
-
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         Intent restart = new Intent(getApplicationContext(), this.getClass());
@@ -119,4 +118,5 @@ public class FinanceService extends Service{
         startService(restart);
         super.onTaskRemoved(rootIntent);
     }
+    
 }
