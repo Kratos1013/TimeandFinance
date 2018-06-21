@@ -33,6 +33,14 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
     public static final String TABLE_CATEGORIES_Income = "categorynamesforincome";
     public static final String KEY_CATEGORY_ICONS = "icons";
     public static final String TABLE_NEW_ICON = "newicon";
+    public static final String TABLE_NAME_ACTIVIES = "activities";
+    public static final String KEY_ACTIVITY_NAME = "activityname";
+    public static final String KEY_ACTIVITY_DESCRIPTION = "activitydescription";
+    public static final String KEY_ACTIVITY_PRICE = "price";
+    public static final String KEY_ACTIVITY_DATE = "date";
+    public static final String KEY_ACTIVITY_PRICE_TODAY = "pricetoday";
+
+
     public Context context;
     public FinanceSQLiteHandler(Context context) {
         super(context, DataBase_Name, null, 1);
@@ -66,7 +74,14 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
         String  CREATE_NEW = "CREATE TABLE " + TABLE_NEW_ICON + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_Category + " TEXT," + KEY_CATEGORY_ICONS +" VARCHAR(255)"+ ");";
         db.execSQL(CREATE_NEW);
-        ///////////////////////////////////////////////////
+
+        // Tables for Activites
+
+        String CREATE_ACTIVITIES = "CREATE TABLE "+TABLE_NAME_ACTIVIES+"("
+                + KEY_ID + "INTEGER PRIMARY KEY,"+ KEY_ACTIVITY_NAME+ " TEXT,"
+                + KEY_ACTIVITY_DESCRIPTION+" TEXT,"+ KEY_ACTIVITY_DATE+" TEXT,"
+                + KEY_ACTIVITY_PRICE+ " TEXT," + KEY_ACTIVITY_PRICE_TODAY+" TEXT" + ");";
+        db.execSQL(CREATE_ACTIVITIES);
 
 
     }
@@ -79,6 +94,7 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_CATEGORIES_Spent);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_CATEGORIES_Income);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NEW_ICON);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME_ACTIVIES);
         // Create tables again
         onCreate(db);
     }
@@ -91,6 +107,21 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_Amount, amount);
         values.put(KEY_CATEGORY_ICONS,icon);
         long result = db.insert(table_name, null, values);
+        if (result == -1){
+            return false;
+        }else {
+            return true;
+        }
+    }
+    public boolean inserttoactivity(String Name, String description, String date,String price,String pricetoday){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_ACTIVITY_NAME,Name);
+        values.put(KEY_ACTIVITY_DESCRIPTION,description);
+        values.put(KEY_ACTIVITY_DATE,date);
+        values.put(KEY_ACTIVITY_PRICE, price);
+        values.put(KEY_ACTIVITY_PRICE_TODAY,pricetoday);
+        long result = db.insert(TABLE_NAME_ACTIVIES, null, values);
         if (result == -1){
             return false;
         }else {
@@ -126,6 +157,7 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
         Cursor result = db.rawQuery("select * from "+Table_name, null);
         return result;
     }
+
     public Cursor getAlldatasbydate(String table,String category, String date){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor result = db.rawQuery("select * from "+table+" where "+KEY_Category+" = \"" + category + "\" and "+KEY_Date+" like "+"\"%"+date+"\";",null);

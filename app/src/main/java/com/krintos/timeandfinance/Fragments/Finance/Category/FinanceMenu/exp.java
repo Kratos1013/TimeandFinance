@@ -1,4 +1,4 @@
-package com.krintos.timeandfinance.Fragments.Finance.Category;
+package com.krintos.timeandfinance.Fragments.Finance.Category.FinanceMenu;
 
 
 import android.database.Cursor;

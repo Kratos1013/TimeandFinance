@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.krintos.timeandfinance.Fragments.Finance.Category.MonthlyFinance">
+    tools:context="com.krintos.timeandfinance.Fragments.Finance.Category.FinanceMenu.MonthlyFinance">
     <TextView
         android:id="@+id/showyear"
         android:textAlignment="center"

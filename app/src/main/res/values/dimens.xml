@@ -8,4 +8,9 @@
     <dimen name="nodata">25dp</dimen>
     <dimen name="date">20sp</dimen>
     <dimen name="totalbudget">35sp</dimen>
+    <dimen name="ts1">15sp</dimen>
+    <dimen name="ts2">20sp</dimen>
+    <dimen name="ts3">25sp</dimen>
+    <dimen name="ts4">30sp</dimen>
+    <dimen name="floatingactionbutton">15dp</dimen>
 </resources>

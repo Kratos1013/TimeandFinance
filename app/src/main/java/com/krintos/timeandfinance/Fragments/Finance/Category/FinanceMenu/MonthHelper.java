@@ -1,4 +1,4 @@
-package com.krintos.timeandfinance.Fragments.Finance.Category;
+package com.krintos.timeandfinance.Fragments.Finance.Category.FinanceMenu;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

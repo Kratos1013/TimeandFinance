@@ -1,6 +1,7 @@
 package com.krintos.timeandfinance.Fragments.Helpers;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -49,14 +50,18 @@ public class FinanceMainPageHelper extends ArrayAdapter<String> {
         if (type.equals("income")){
 
             viewHolder.cat.setText(categoryname[position]);
+            viewHolder.cat.setTextColor(context.getResources().getColor(R.color.ts2));
             String floattostring = String.valueOf(amounts[position]);
             String price = "+"+floattostring+"p";
             viewHolder.amount.setText(price);
+            viewHolder.amount.setTextColor(context.getResources().getColor(R.color.ts2));
         }else if (type.equals("spent")){
+            viewHolder.cat.setTextColor(context.getResources().getColor(R.color.tsred));
             viewHolder.cat.setText(categoryname[position]);
             String floattostring = String.valueOf(amounts[position]);
             String price = "-"+floattostring+"p";
             viewHolder.amount.setText(price);
+            viewHolder.amount.setTextColor(context.getResources().getColor(R.color.tsred));
         }
         return r;
     }

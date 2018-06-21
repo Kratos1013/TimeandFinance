@@ -10,18 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.krintos.timeandfinance.Database.FinanceSQLiteHandler;
-import com.krintos.timeandfinance.Fragments.Finance.Category.Finance_Category_main;
-import com.krintos.timeandfinance.Fragments.Finance.Sms.SMSchecker;
-import com.krintos.timeandfinance.Fragments.Finance.Statistics.Finance_Statistics_Main_Frame;
+import com.krintos.timeandfinance.Fragments.Finance.Category.ActivitiesMenu.ActivitiesMain;
+import com.krintos.timeandfinance.Fragments.Finance.Category.FinanceMenu.Finance_Category_main;
 import com.krintos.timeandfinance.Fragments.Helpers.FinanceMainPageHelper;
 import com.krintos.timeandfinance.R;
 
@@ -39,7 +35,7 @@ public class Finance extends Fragment {
     private ArrayList<Float> amounts =new ArrayList<>();
     private ArrayList<Float> amountsforincome =new ArrayList<>();
     private ListView spentlistview, incomelistview;
-    private LinearLayout incomeandspend,statistics,card;
+    private LinearLayout incomeandspend,aktivi,pasivi;
     private TextView tvincome,tvspent,tvtotal, showdate;
     private int datafilter, day, month, year, pfilter;
     private String mday,pickedDate;
@@ -57,8 +53,8 @@ public class Finance extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_finance, container, false);
         incomeandspend = rootView.findViewById(R.id.incomeandspent);
-        statistics = rootView.findViewById(R.id.statistics);
-        card = rootView.findViewById(R.id.card);
+        aktivi = rootView.findViewById(R.id.aktivi);
+        pasivi = rootView.findViewById(R.id.passivi);
         tvincome = rootView.findViewById(R.id.income);
         tvspent = rootView.findViewById(R.id.spent);
         tvtotal = rootView.findViewById(R.id.total);
@@ -117,7 +113,22 @@ public class Finance extends Fragment {
 
             }
         });
+        aktivi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Fragment Activity = new ActivitiesMain();
+                        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_main, Activity);
+                        ft.addToBackStack("ActiviesMainPage");
+                        ft.commit();
+                    }
+                }, 100);
 
+            }
+        });
         return rootView;
     }
 
