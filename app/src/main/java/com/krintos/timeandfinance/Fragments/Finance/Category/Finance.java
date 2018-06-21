@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.krintos.timeandfinance.Database.FinanceSQLiteHandler;
 import com.krintos.timeandfinance.Fragments.Finance.Category.ActivitiesMenu.ActivitiesMain;
+import com.krintos.timeandfinance.Fragments.Finance.Category.ActivitiesMenu.ActivityMainHelper;
 import com.krintos.timeandfinance.Fragments.Finance.Category.FinanceMenu.Finance_Category_main;
 import com.krintos.timeandfinance.Fragments.Helpers.FinanceMainPageHelper;
 import com.krintos.timeandfinance.R;
@@ -34,9 +35,9 @@ public class Finance extends Fragment {
 
     private ArrayList<Float> amounts =new ArrayList<>();
     private ArrayList<Float> amountsforincome =new ArrayList<>();
-    private ListView spentlistview, incomelistview;
+    private ListView spentlistview, incomelistview,listViewforactivities;
     private LinearLayout incomeandspend,aktivi,pasivi;
-    private TextView tvincome,tvspent,tvtotal, showdate;
+    private TextView tvincome,tvspent,tvtotal, showdate,potok;
     private int datafilter, day, month, year, pfilter;
     private String mday,pickedDate;
     private FinanceSQLiteHandler db;
@@ -60,11 +61,15 @@ public class Finance extends Fragment {
         tvtotal = rootView.findViewById(R.id.total);
         incomelistview = rootView.findViewById(R.id.incomelistview);
         spentlistview = rootView.findViewById(R.id.spentlistview);
+        listViewforactivities = rootView.findViewById(R.id.listviewforactivities);
+        potok = rootView.findViewById(R.id.potok);
+        potok.setSelected(true);
         db = new FinanceSQLiteHandler(getContext());
         calendar = Calendar.getInstance();
         setdatasforincomeandspent(1, getcalendar(1));
         setincomelistview(getcalendar(1));
         setspentlistview(getcalendar(1));
+        setactivitieslistview(getcalendar(1));
         incomelistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -75,6 +80,22 @@ public class Finance extends Fragment {
                         android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.content_main, Category);
                         ft.addToBackStack("incomeandspentmenu");
+                        ft.commit();
+                    }
+                }, 100);
+
+            }
+        });
+        listViewforactivities.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Fragment Activity = new ActivitiesMain();
+                        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_main, Activity);
+                        ft.addToBackStack("ActiviesMainPage");
                         ft.commit();
                     }
                 }, 100);
@@ -129,7 +150,39 @@ public class Finance extends Fragment {
 
             }
         });
+
         return rootView;
+    }
+
+    private void setactivitieslistview(String getcalendar) {
+        ArrayList<String> activityname = new ArrayList<>();
+        ArrayList<String> activitydescriptions = new ArrayList<>();
+        ArrayList<String> activitydate = new ArrayList<>();
+        ArrayList<String> activityinitialprice = new ArrayList<>();
+        ArrayList<String> activitypricetoday = new ArrayList<>();
+        String table = FinanceSQLiteHandler.TABLE_NAME_ACTIVIES;
+        Cursor result = db.getAlldatas(table);
+        if (result.getCount() > 0){
+            while (result.moveToNext()){
+
+                String name = result.getString(1);
+                String description = result.getString(2);
+                String date = result.getString(3);
+                String initialprice = result.getString(4);
+                String pricetoday = result.getString(5);
+                activityname.add(name);
+                activitydescriptions.add(description);
+                activitydate.add(date);
+                activityinitialprice.add(initialprice);
+                activitypricetoday.add(pricetoday);
+            }
+            ActivityMainHelper activityMainHelper = new ActivityMainHelper(getActivity(),activityname,activitydescriptions,
+                    activitydate,activityinitialprice,activitypricetoday);
+            activityMainHelper.notifyDataSetChanged();
+            listViewforactivities.setAdapter(activityMainHelper);
+        }else {
+            //nothing found
+        }
     }
 
     private void setincomelistview(String month) {

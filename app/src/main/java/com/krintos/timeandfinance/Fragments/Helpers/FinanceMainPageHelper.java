@@ -68,8 +68,8 @@ public class FinanceMainPageHelper extends ArrayAdapter<String> {
     class ViewHolder{
         TextView cat, amount;
         ViewHolder(View v){
-            cat = (TextView) v.findViewById(R.id.categories);
-            amount = (TextView) v.findViewById(R.id.prices);
+            cat =  v.findViewById(R.id.categories);
+            amount =  v.findViewById(R.id.prices);
         }
     }
 }

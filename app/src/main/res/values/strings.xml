@@ -55,5 +55,10 @@
     <string name="passivi">ПАССИВЫ</string>
     <string name="sberejeniye">СБЕРЕЖЕНИЕ</string>
     <string name="denejniypotok">ДЕНЕЖНЫЙ ПОТОК</string>
+    <string name="activityname">Business Name</string>
+    <string name="activitydescription">Description</string>
+    <string name="activityprice">Initial price</string>
+    <string name="activitypricetoday">Price today</string>
+    <string name="today">Today</string>
 
 </resources>
