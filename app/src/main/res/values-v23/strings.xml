@@ -5,4 +5,9 @@
     <string name="activityprice">Initial price</string>
     <string name="activitypricetoday">Price today</string>
     <string name="today">Today</string>
+    <string name="passivename">Passive Name</string>
+    <string name="passivedescription">Description</string>
+    <string name="passiveenddate">Ending date</string>
+    <string name="passiveprice">Amount</string>
+    <string name="passivepricepermonth">Price per month</string>
 </resources>

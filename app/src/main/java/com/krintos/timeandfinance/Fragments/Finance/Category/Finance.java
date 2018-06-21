@@ -19,6 +19,8 @@ import com.krintos.timeandfinance.Database.FinanceSQLiteHandler;
 import com.krintos.timeandfinance.Fragments.Finance.Category.ActivitiesMenu.ActivitiesMain;
 import com.krintos.timeandfinance.Fragments.Finance.Category.ActivitiesMenu.ActivityMainHelper;
 import com.krintos.timeandfinance.Fragments.Finance.Category.FinanceMenu.Finance_Category_main;
+import com.krintos.timeandfinance.Fragments.Finance.Category.PassivesMenu.PassivesMain;
+import com.krintos.timeandfinance.Fragments.Finance.Category.PassivesMenu.PassivesMainHelper;
 import com.krintos.timeandfinance.Fragments.Helpers.FinanceMainPageHelper;
 import com.krintos.timeandfinance.R;
 
@@ -35,7 +37,7 @@ public class Finance extends Fragment {
 
     private ArrayList<Float> amounts =new ArrayList<>();
     private ArrayList<Float> amountsforincome =new ArrayList<>();
-    private ListView spentlistview, incomelistview,listViewforactivities;
+    private ListView spentlistview, incomelistview,listViewforactivities,listViewforpassive;
     private LinearLayout incomeandspend,aktivi,pasivi;
     private TextView tvincome,tvspent,tvtotal, showdate,potok;
     private int datafilter, day, month, year, pfilter;
@@ -62,6 +64,7 @@ public class Finance extends Fragment {
         incomelistview = rootView.findViewById(R.id.incomelistview);
         spentlistview = rootView.findViewById(R.id.spentlistview);
         listViewforactivities = rootView.findViewById(R.id.listviewforactivities);
+        listViewforpassive = rootView.findViewById(R.id.listviewforpassive);
         potok = rootView.findViewById(R.id.potok);
         potok.setSelected(true);
         db = new FinanceSQLiteHandler(getContext());
@@ -70,6 +73,7 @@ public class Finance extends Fragment {
         setincomelistview(getcalendar(1));
         setspentlistview(getcalendar(1));
         setactivitieslistview(getcalendar(1));
+        setlistviewforpassive(getcalendar(1));
         incomelistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -118,6 +122,22 @@ public class Finance extends Fragment {
 
             }
         });
+        listViewforpassive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Fragment Passivi = new PassivesMain();
+                        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_main, Passivi);
+                        ft.addToBackStack("PassivesMainPage");
+                        ft.commit();
+                    }
+                }, 100);
+
+            }
+        });
         incomeandspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,10 +170,54 @@ public class Finance extends Fragment {
 
             }
         });
+        pasivi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Fragment Passivi = new PassivesMain();
+                        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_main, Passivi);
+                        ft.addToBackStack("PassivesMainPage");
+                        ft.commit();
+                    }
+                }, 100);
+
+            }
+        });
 
         return rootView;
     }
-
+    private void setlistviewforpassive(String month) {
+        ArrayList<String> passivename = new ArrayList<>();
+        ArrayList<String> passivedescriptions = new ArrayList<>();
+        ArrayList<String> passiveprice = new ArrayList<>();
+        ArrayList<String> passivepricepermonth = new ArrayList<>();
+        ArrayList<String> passivenddate = new ArrayList<>();
+        String table = FinanceSQLiteHandler.TABLE_NAME_PASSIVES;
+        Cursor result = db.getAlldatas(table);
+        if (result.getCount() > 0 ){
+            while (result.moveToNext()){
+                String name = result.getString(1);
+                String description = result.getString(2);
+                String price = result.getString(3);
+                String pricepermonth = result.getString(4);
+                String enddate = result.getString(5);
+                passivename.add(name);
+                passivedescriptions.add(description);
+                passiveprice.add(price);
+                passivepricepermonth.add(pricepermonth);
+                passivenddate.add(enddate);
+            }
+            PassivesMainHelper passivesMainHelper =  new PassivesMainHelper(getActivity(),
+                    passivename,passivedescriptions,passiveprice,passivepricepermonth,passivenddate);
+            passivesMainHelper.notifyDataSetChanged();
+            listViewforpassive.setAdapter(passivesMainHelper);
+        }else {
+            //nothing found
+        }
+    }
     private void setactivitieslistview(String getcalendar) {
         ArrayList<String> activityname = new ArrayList<>();
         ArrayList<String> activitydescriptions = new ArrayList<>();
