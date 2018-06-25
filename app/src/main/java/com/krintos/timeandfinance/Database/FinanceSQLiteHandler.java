@@ -45,7 +45,11 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
     public static final String KEY_PASSIVE_PRICE = "passiveprice";
     public static final String KEY_PASSIVE_PRICE_PER_MONTH = "passivepricepermonth";
     public static final String KEY_PASSIVE_DATE_END = "passivedateend";
-
+    public static final String TABLE_NAME_COLLECTIONS = "collections";
+    public static final String KEY_COLLECTIONS_AIM = "aim";
+    public static final String KEY_COLLECTIONS_FULL_AMOUNT = "fullamount";
+    public static final String KEY_COLLECTIONS_AMOUNT_NOW = "amountnow";
+    public static final String KEY_COLLECTIONS_AMOUNT_PER_MONTH = "amountpermonth";
 
 
     public Context context;
@@ -89,11 +93,22 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
                 + KEY_ACTIVITY_DESCRIPTION + " TEXT," + KEY_ACTIVITY_DATE + " TEXT,"
                 + KEY_ACTIVITY_PRICE + " TEXT, " + KEY_ACTIVITY_PRICE_TODAY + " TEXT" + ");";
         db.execSQL(CREATE_ACTIVITIES);
+
+        // Table for Passives
+
         String CREATE_PASSIVES = "CREATE TABLE " + TABLE_NAME_PASSIVES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PASSIVE_NAME + " TEXT,"
                 + KEY_PASSIVE_DESCRIPTION + " TEXT," + KEY_PASSIVE_PRICE + " TEXT,"
                 + KEY_PASSIVE_PRICE_PER_MONTH + " TEXT, " + KEY_PASSIVE_DATE_END+ " TEXT" + ");";
         db.execSQL(CREATE_PASSIVES);
+
+        // Tables for Collections
+
+        String CREATE_COLLECTIONS = "CREATE TABLE " + TABLE_NAME_COLLECTIONS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_COLLECTIONS_AIM + " TEXT,"
+                + KEY_COLLECTIONS_FULL_AMOUNT + " TEXT," + KEY_COLLECTIONS_AMOUNT_NOW + " TEXT,"
+                + KEY_COLLECTIONS_AMOUNT_PER_MONTH + " TEXT " + ");";
+        db.execSQL(CREATE_COLLECTIONS);
 
     }
 
@@ -107,6 +122,8 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NEW_ICON);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME_ACTIVIES);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME_PASSIVES);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME_COLLECTIONS);
+
         // Create tables again
         onCreate(db);
     }
@@ -149,6 +166,20 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_PASSIVE_PRICE_PER_MONTH, price_per_month);
         values.put(KEY_PASSIVE_DATE_END,date_end);
         long result = db.insert(TABLE_NAME_PASSIVES, null, values);
+        if (result == -1){
+            return false;
+        }else {
+            return true;
+        }
+    }
+    public boolean inserttocollections(String aim, String full_amount,String amount_now, String amount_per_month){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_COLLECTIONS_AIM,aim);
+        values.put(KEY_COLLECTIONS_FULL_AMOUNT,full_amount);
+        values.put(KEY_COLLECTIONS_AMOUNT_NOW,amount_now);
+        values.put(KEY_COLLECTIONS_AMOUNT_PER_MONTH, amount_per_month);
+        long result = db.insert(TABLE_NAME_COLLECTIONS, null, values);
         if (result == -1){
             return false;
         }else {

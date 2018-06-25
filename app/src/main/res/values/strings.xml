@@ -65,5 +65,10 @@
     <string name="passiveenddate">Ending date</string>
     <string name="passiveprice">Amount</string>
     <string name="passivepricepermonth">Price per month</string>
+    <string name="collectionaim">Aim</string>
+    <string name="collectionfull">How much ?</string>
+    <string name="collectionpermonth">Per month</string>
+    <string name="collectionnow">How much collected already ?</string>
+    <string name="collectionfullamount">Have to collect</string>
 
 </resources>

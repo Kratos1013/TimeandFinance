@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.krintos.timeandfinance.Database.FinanceSQLiteHandler;
 import com.krintos.timeandfinance.Fragments.Finance.Category.ActivitiesMenu.ActivitiesMain;
 import com.krintos.timeandfinance.Fragments.Finance.Category.ActivitiesMenu.ActivityMainHelper;
+import com.krintos.timeandfinance.Fragments.Finance.Category.Collections.Collections;
 import com.krintos.timeandfinance.Fragments.Finance.Category.FinanceMenu.Finance_Category_main;
 import com.krintos.timeandfinance.Fragments.Finance.Category.PassivesMenu.PassivesMain;
 import com.krintos.timeandfinance.Fragments.Finance.Category.PassivesMenu.PassivesMainHelper;
@@ -38,7 +39,7 @@ public class Finance extends Fragment {
     private ArrayList<Float> amounts =new ArrayList<>();
     private ArrayList<Float> amountsforincome =new ArrayList<>();
     private ListView spentlistview, incomelistview,listViewforactivities,listViewforpassive;
-    private LinearLayout incomeandspend,aktivi,pasivi;
+    private LinearLayout incomeandspend,aktivi,pasivi,sberejeniye;
     private TextView tvincome,tvspent,tvtotal, showdate,potok;
     private int datafilter, day, month, year, pfilter;
     private String mday,pickedDate;
@@ -58,6 +59,7 @@ public class Finance extends Fragment {
         incomeandspend = rootView.findViewById(R.id.incomeandspent);
         aktivi = rootView.findViewById(R.id.aktivi);
         pasivi = rootView.findViewById(R.id.passivi);
+        sberejeniye =  rootView.findViewById(R.id.sberejeniye);
         tvincome = rootView.findViewById(R.id.income);
         tvspent = rootView.findViewById(R.id.spent);
         tvtotal = rootView.findViewById(R.id.total);
@@ -180,6 +182,22 @@ public class Finance extends Fragment {
                         android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.content_main, Passivi);
                         ft.addToBackStack("PassivesMainPage");
+                        ft.commit();
+                    }
+                }, 100);
+
+            }
+        });
+        sberejeniye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Fragment Collections = new Collections();
+                        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_main, Collections);
+                        ft.addToBackStack("CollectionsMainPage");
                         ft.commit();
                     }
                 }, 100);
