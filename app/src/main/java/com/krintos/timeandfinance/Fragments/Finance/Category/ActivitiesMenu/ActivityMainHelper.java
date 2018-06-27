@@ -18,18 +18,20 @@ import java.util.ArrayList;
  */
 
 public class ActivityMainHelper extends ArrayAdapter<String> {
-    private String[] name, description, date, initialprice, pricetoday;
+    private String[] name, description, date, initialprice, pricetoday,Id;
     private Activity context;
     private String today ;
     public ActivityMainHelper(Activity context, ArrayList<String> names,ArrayList<String> descriptions,
-                              ArrayList<String> dates,ArrayList<String> initialprices,ArrayList<String> pricestoday){
-        super(context, R.layout.activity_main_helper,names);
+                              ArrayList<String> dates,ArrayList<String> initialprices,ArrayList<String> pricestoday,
+                              ArrayList<String> Id){
+        super(context, R.layout.activity_main_helper,Id);
         this.context = context;
         this.name = names.toArray(new String[0]);
         this.description = descriptions.toArray(new String[0]);
         this.date = dates.toArray(new String[0]);
         this.initialprice = initialprices.toArray(new String[0]);
         this.pricetoday = pricestoday.toArray(new String[0]);
+        this.Id = Id.toArray(new String[0]);
         this.today = context.getResources().getString(R.string.today);
     }
 
@@ -46,12 +48,14 @@ public class ActivityMainHelper extends ArrayAdapter<String> {
         }else {
             viewHolder = (ActivityMainHelper.ViewHolder) r.getTag();
         }
+        viewHolder.layoutId.setText(Id[position]);
         viewHolder.tname.setText(name[position]);
         viewHolder.desc.setText(description[position]);
         viewHolder.inprice.setText(initialprice[position]);
         viewHolder.date.setText(date[position]);
         viewHolder.toprice.setText(pricetoday[position]);
         viewHolder.todate.setText(today);
+
         viewHolder.tname.setSelected(true);
         viewHolder.desc.setSelected(true);
 
@@ -59,8 +63,9 @@ public class ActivityMainHelper extends ArrayAdapter<String> {
         return r;
     }
     class ViewHolder{
-        TextView tname, desc, date,todate, inprice, toprice;
+        TextView layoutId,tname, desc, date,todate, inprice, toprice;
         ViewHolder(View v){
+            layoutId = v.findViewById(R.id.layoutid);
             tname = v.findViewById(R.id.name);
             desc = v.findViewById(R.id.description);
             date = v.findViewById(R.id.date);

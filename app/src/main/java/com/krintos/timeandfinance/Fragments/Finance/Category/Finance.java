@@ -19,6 +19,7 @@ import com.krintos.timeandfinance.Database.FinanceSQLiteHandler;
 import com.krintos.timeandfinance.Fragments.Finance.Category.ActivitiesMenu.ActivitiesMain;
 import com.krintos.timeandfinance.Fragments.Finance.Category.ActivitiesMenu.ActivityMainHelper;
 import com.krintos.timeandfinance.Fragments.Finance.Category.Collections.Collections;
+import com.krintos.timeandfinance.Fragments.Finance.Category.Collections.CollectionsHelper;
 import com.krintos.timeandfinance.Fragments.Finance.Category.FinanceMenu.Finance_Category_main;
 import com.krintos.timeandfinance.Fragments.Finance.Category.PassivesMenu.PassivesMain;
 import com.krintos.timeandfinance.Fragments.Finance.Category.PassivesMenu.PassivesMainHelper;
@@ -38,7 +39,7 @@ public class Finance extends Fragment {
 
     private ArrayList<Float> amounts =new ArrayList<>();
     private ArrayList<Float> amountsforincome =new ArrayList<>();
-    private ListView spentlistview, incomelistview,listViewforactivities,listViewforpassive;
+    private ListView spentlistview, incomelistview,listViewforactivities,listViewforpassive, listviewforcollections;
     private LinearLayout incomeandspend,aktivi,pasivi,sberejeniye;
     private TextView tvincome,tvspent,tvtotal, showdate,potok;
     private int datafilter, day, month, year, pfilter;
@@ -64,6 +65,7 @@ public class Finance extends Fragment {
         tvspent = rootView.findViewById(R.id.spent);
         tvtotal = rootView.findViewById(R.id.total);
         incomelistview = rootView.findViewById(R.id.incomelistview);
+        listviewforcollections = rootView.findViewById(R.id.collectionslistview);
         spentlistview = rootView.findViewById(R.id.spentlistview);
         listViewforactivities = rootView.findViewById(R.id.listviewforactivities);
         listViewforpassive = rootView.findViewById(R.id.listviewforpassive);
@@ -76,6 +78,7 @@ public class Finance extends Fragment {
         setspentlistview(getcalendar(1));
         setactivitieslistview(getcalendar(1));
         setlistviewforpassive(getcalendar(1));
+        setlistviewforcollections(getcalendar(1));
         incomelistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -134,6 +137,22 @@ public class Finance extends Fragment {
                         android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.content_main, Passivi);
                         ft.addToBackStack("PassivesMainPage");
+                        ft.commit();
+                    }
+                }, 100);
+
+            }
+        });
+        listviewforcollections.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Fragment Collections = new Collections();
+                        android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_main, Collections);
+                        ft.addToBackStack("CollectionsMainPage");
                         ft.commit();
                     }
                 }, 100);
@@ -207,6 +226,34 @@ public class Finance extends Fragment {
 
         return rootView;
     }
+
+    private void setlistviewforcollections(String getcalendar) {
+
+            ArrayList<String> aim = new ArrayList<>();
+            ArrayList<String> full = new ArrayList<>();
+            ArrayList<String> permonth = new ArrayList<>();
+            ArrayList<String> now = new ArrayList<>();
+
+            Cursor collections = db.getAlldatas(FinanceSQLiteHandler.TABLE_NAME_COLLECTIONS);
+            if (collections.getCount() > 0){
+                while (collections.moveToNext()){
+                    String gaim = collections.getString(1);
+                    String gfull = collections.getString(2);
+                    String gnow = collections.getString(3);
+                    String gpermonth = collections.getString(4);
+                    aim.add(gaim);
+                    full.add(gfull);
+                    permonth.add(gpermonth);
+                    now.add(gnow);
+                }
+            }else {
+                // TODO: 6/25/18 nothing found in collections
+            }
+            CollectionsHelper collectionsHelper = new CollectionsHelper(getActivity(),aim,full,permonth,now);
+            collectionsHelper.notifyDataSetChanged();
+            listviewforcollections.setAdapter(collectionsHelper);
+    }
+
     private void setlistviewforpassive(String month) {
         ArrayList<String> passivename = new ArrayList<>();
         ArrayList<String> passivedescriptions = new ArrayList<>();
@@ -242,16 +289,18 @@ public class Finance extends Fragment {
         ArrayList<String> activitydate = new ArrayList<>();
         ArrayList<String> activityinitialprice = new ArrayList<>();
         ArrayList<String> activitypricetoday = new ArrayList<>();
+        ArrayList<String> activityId = new ArrayList<>();
         String table = FinanceSQLiteHandler.TABLE_NAME_ACTIVIES;
         Cursor result = db.getAlldatas(table);
         if (result.getCount() > 0){
             while (result.moveToNext()){
-
+                String Id = result.getString(0);
                 String name = result.getString(1);
                 String description = result.getString(2);
                 String date = result.getString(3);
                 String initialprice = result.getString(4);
                 String pricetoday = result.getString(5);
+                activityId.add(Id);
                 activityname.add(name);
                 activitydescriptions.add(description);
                 activitydate.add(date);
@@ -259,7 +308,7 @@ public class Finance extends Fragment {
                 activitypricetoday.add(pricetoday);
             }
             ActivityMainHelper activityMainHelper = new ActivityMainHelper(getActivity(),activityname,activitydescriptions,
-                    activitydate,activityinitialprice,activitypricetoday);
+                    activitydate,activityinitialprice,activitypricetoday,activityId);
             activityMainHelper.notifyDataSetChanged();
             listViewforactivities.setAdapter(activityMainHelper);
         }else {

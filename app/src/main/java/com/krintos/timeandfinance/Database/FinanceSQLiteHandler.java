@@ -314,6 +314,17 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
         db.update(tablename, values, KEY_Category+" = ?", new String[]{name});
         return true;
     }
+    public boolean updateactivities(String id, String name, String desc,String date, String init, String todayprice){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_ACTIVITY_NAME, name);
+        values.put(KEY_ACTIVITY_DESCRIPTION, desc);
+        values.put(KEY_ACTIVITY_DATE, date);
+        values.put(KEY_ACTIVITY_PRICE, init);
+        values.put(KEY_ACTIVITY_PRICE_TODAY, todayprice);
+        db.update(TABLE_NAME_ACTIVIES, values, KEY_ID+" = ?", new String[]{id});
+        return true;
+    }
     public boolean insertnew(String link, String name){
         SQLiteDatabase db =this.getWritableDatabase();
         ContentValues values = new ContentValues();
