@@ -18,16 +18,17 @@ import java.util.ArrayList;
  */
 
 public class CollectionsHelper extends ArrayAdapter<String> {
-    private String [] aim, full, permonth, now;
+    private String [] aim, full, permonth, now,ids;
     private Activity context;
     public CollectionsHelper(Activity context, ArrayList<String> aim,ArrayList<String> full,ArrayList<String> permonth,
-                             ArrayList<String> now){
+                             ArrayList<String> now,ArrayList<String> id){
         super(context, R.layout.collection_helper, aim);
         this.context = context;
         this.aim = aim.toArray(new String[0]);
         this.full = full.toArray(new String[0]);
         this.permonth = permonth.toArray(new String[0]);
         this.now = now.toArray(new String[0]);
+        this.ids = id.toArray(new String[0]);
     }
 
     @NonNull
@@ -43,7 +44,7 @@ public class CollectionsHelper extends ArrayAdapter<String> {
         }else {
             viewHolder = (CollectionsHelper.ViewHolder) r.getTag();
         }
-
+        viewHolder.tvid.setText(ids[position]);
         viewHolder.taim.setText(aim[position]);
         viewHolder.tfull.setText(full[position]);
         viewHolder.tpermonth.setText(permonth[position]);
@@ -52,8 +53,9 @@ public class CollectionsHelper extends ArrayAdapter<String> {
         return r;
     }
     class ViewHolder{
-        TextView taim,tfull,tpermonth,tnow;
+        TextView taim,tfull,tpermonth,tnow,tvid;
         ViewHolder(View v){
+            tvid = v.findViewById(R.id.tvids);
             taim = v.findViewById(R.id.aim);
             tfull = v.findViewById(R.id.full);
             tpermonth = v.findViewById(R.id.permonth);

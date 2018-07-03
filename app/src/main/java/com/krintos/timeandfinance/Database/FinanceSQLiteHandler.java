@@ -325,6 +325,27 @@ public class FinanceSQLiteHandler extends SQLiteOpenHelper {
         db.update(TABLE_NAME_ACTIVIES, values, KEY_ID+" = ?", new String[]{id});
         return true;
     }
+    public boolean updatepassives(String id, String name, String desc,String price, String pricepermonth, String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_PASSIVE_NAME, name);
+        values.put(KEY_PASSIVE_DESCRIPTION, desc);
+        values.put(KEY_PASSIVE_PRICE, price);
+        values.put(KEY_PASSIVE_PRICE_PER_MONTH, pricepermonth);
+        values.put(KEY_PASSIVE_DATE_END, date);
+        db.update(TABLE_NAME_PASSIVES, values, KEY_ID+" = ?", new String[]{id});
+        return true;
+    }
+    public boolean updatecollections(String id, String aim, String amount,String amountpermonth, String amountnow){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_COLLECTIONS_AIM, aim);
+        values.put(KEY_COLLECTIONS_FULL_AMOUNT, amount);
+        values.put(KEY_COLLECTIONS_AMOUNT_PER_MONTH, amountpermonth);
+        values.put(KEY_COLLECTIONS_AMOUNT_NOW, amountnow);
+        db.update(TABLE_NAME_COLLECTIONS, values, KEY_ID+" = ?", new String[]{id});
+        return true;
+    }
     public boolean insertnew(String link, String name){
         SQLiteDatabase db =this.getWritableDatabase();
         ContentValues values = new ContentValues();

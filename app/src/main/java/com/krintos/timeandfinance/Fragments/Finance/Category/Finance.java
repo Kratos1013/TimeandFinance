@@ -233,14 +233,18 @@ public class Finance extends Fragment {
             ArrayList<String> full = new ArrayList<>();
             ArrayList<String> permonth = new ArrayList<>();
             ArrayList<String> now = new ArrayList<>();
+            ArrayList<String> itemsid = new ArrayList<>();
 
             Cursor collections = db.getAlldatas(FinanceSQLiteHandler.TABLE_NAME_COLLECTIONS);
             if (collections.getCount() > 0){
                 while (collections.moveToNext()){
+                    listviewforcollections.setVisibility(View.VISIBLE);
+                    String itemid = collections.getString(0);
                     String gaim = collections.getString(1);
                     String gfull = collections.getString(2);
                     String gnow = collections.getString(3);
                     String gpermonth = collections.getString(4);
+                    itemsid.add(itemid);
                     aim.add(gaim);
                     full.add(gfull);
                     permonth.add(gpermonth);
@@ -248,13 +252,15 @@ public class Finance extends Fragment {
                 }
             }else {
                 // TODO: 6/25/18 nothing found in collections
+                listviewforcollections.setVisibility(View.GONE);
             }
-            CollectionsHelper collectionsHelper = new CollectionsHelper(getActivity(),aim,full,permonth,now);
+            CollectionsHelper collectionsHelper = new CollectionsHelper(getActivity(),aim,full,permonth,now,itemsid);
             collectionsHelper.notifyDataSetChanged();
             listviewforcollections.setAdapter(collectionsHelper);
     }
 
     private void setlistviewforpassive(String month) {
+        ArrayList<String> ids = new ArrayList<>();
         ArrayList<String> passivename = new ArrayList<>();
         ArrayList<String> passivedescriptions = new ArrayList<>();
         ArrayList<String> passiveprice = new ArrayList<>();
@@ -264,11 +270,13 @@ public class Finance extends Fragment {
         Cursor result = db.getAlldatas(table);
         if (result.getCount() > 0 ){
             while (result.moveToNext()){
+                String Id = result.getString(0);
                 String name = result.getString(1);
                 String description = result.getString(2);
                 String price = result.getString(3);
                 String pricepermonth = result.getString(4);
                 String enddate = result.getString(5);
+                ids.add(Id);
                 passivename.add(name);
                 passivedescriptions.add(description);
                 passiveprice.add(price);
@@ -276,7 +284,7 @@ public class Finance extends Fragment {
                 passivenddate.add(enddate);
             }
             PassivesMainHelper passivesMainHelper =  new PassivesMainHelper(getActivity(),
-                    passivename,passivedescriptions,passiveprice,passivepricepermonth,passivenddate);
+                    passivename,passivedescriptions,passiveprice,passivepricepermonth,passivenddate,ids);
             passivesMainHelper.notifyDataSetChanged();
             listViewforpassive.setAdapter(passivesMainHelper);
         }else {

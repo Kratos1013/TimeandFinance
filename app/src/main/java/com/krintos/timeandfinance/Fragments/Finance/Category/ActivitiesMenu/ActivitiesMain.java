@@ -56,6 +56,7 @@ public class ActivitiesMain extends Fragment {
         listView = rootView.findViewById(R.id.listviewforactivity);
         db = new FinanceSQLiteHandler(getContext());
         setlistview();
+        setdate();
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +117,6 @@ public class ActivitiesMain extends Fragment {
                 }
             }
         });
-        showdate.setText(setdate());
         picker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,6 +192,8 @@ public class ActivitiesMain extends Fragment {
         Cursor result = db.getAlldatas(table);
         if (result.getCount() > 0){
             while (result.moveToNext()){
+                listView.setVisibility(View.VISIBLE);
+
                 String Id = result.getString(0);
                 String name = result.getString(1);
                 String description = result.getString(2);
@@ -211,6 +213,7 @@ public class ActivitiesMain extends Fragment {
             listView.setAdapter(activityMainHelper);
         }else {
             //nothing found
+            listView.setVisibility(View.GONE);
         }
 
     }

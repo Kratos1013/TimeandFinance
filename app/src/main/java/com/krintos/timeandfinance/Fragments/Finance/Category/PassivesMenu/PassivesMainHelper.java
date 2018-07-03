@@ -20,10 +20,10 @@ import java.util.ArrayList;
  */
 
 public class PassivesMainHelper extends ArrayAdapter<String> {
-    private String[] name, description, price, pricepermonth,enddate;
+    private String[] name, description, price, pricepermonth,enddate,id;
     private Activity context;
     public PassivesMainHelper(Activity context, ArrayList<String> names, ArrayList<String> descriptions, ArrayList <String>prices,
-                              ArrayList <String> pricespermonth, ArrayList<String> enddates){
+                              ArrayList <String> pricespermonth, ArrayList<String> enddates,ArrayList<String>ids){
         super(context, R.layout.passive_main_helper,names);
         this.context = context;
         this.name = names.toArray(new String[0]);
@@ -31,6 +31,7 @@ public class PassivesMainHelper extends ArrayAdapter<String> {
         this.price = prices.toArray(new String[0]);
         this.pricepermonth = pricespermonth.toArray(new String[0]);
         this.enddate = enddates.toArray(new String[0]);
+        this.id = ids.toArray(new String[0]);
     }
 
     @NonNull
@@ -46,6 +47,7 @@ public class PassivesMainHelper extends ArrayAdapter<String> {
         }else {
             viewHolder = (PassivesMainHelper.ViewHolder) r.getTag();
         }
+            viewHolder.tvid.setText(id[position]);
             viewHolder.tname.setText(name[position]);
             viewHolder.tdesc.setText(description[position]);
             viewHolder.tprice.setText(price[position]);
@@ -56,8 +58,9 @@ public class PassivesMainHelper extends ArrayAdapter<String> {
         return r;
     }
     class ViewHolder{
-        TextView tname,tdesc,tprice,tpricepermonth,tenddate;
+        TextView tname,tdesc,tprice,tpricepermonth,tenddate,tvid;
         ViewHolder(View v){
+            tvid = v.findViewById(R.id.tvids);
             tname = v.findViewById(R.id.tvname);
             tdesc = v.findViewById(R.id.tvdescription);
             tprice = v.findViewById(R.id.tvprice);
